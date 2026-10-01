@@ -1,11 +1,39 @@
-# Documentación
+# Clima DRY
 
-Documentación técnica y funcional del proyecto Clima DRY.
+Sistema de monitoreo y control climático.
 
-Aquí se almacenará información sobre:
-- Arquitectura del sistema
-- API
-- Base de datos
-- Instalación
-- Configuración
-- 
+## Descripción
+
+Clima DRY es un proyecto orientado al monitoreo y control de condiciones climáticas mediante una aplicación que integra una interfaz de usuario, un servidor backend y una base de datos.
+
+## Arquitectura
+
+El sistema estará compuesto por tres partes principales:
+
+- **Frontend:** Interfaz de usuario.
+- **Backend:** Lógica del sistema y API.
+- **Database:** Almacenamiento y gestión de datos.
+
+La comunicación general será:
+
+Frontend → Backend → Database
+
+## Estructura del proyecto
+
+```text
+clima-dry/
+│
+├── Frontend/
+│   └── README.md
+│
+├── Backend/
+│   └── README.md
+│
+├── DataBase/
+│   └── README.md
+│
+├── DOCS/
+│   └── README.md
+│
+├── .gitignore
+└── README.md
