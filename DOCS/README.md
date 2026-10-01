@@ -2,7 +2,7 @@
 
 Sistema de monitoreo y control climático.
 
-## Descripción
+## Descripción 
 
 Clima DRY es un proyecto orientado al monitoreo y control de condiciones climáticas mediante una aplicación que integra una interfaz de usuario, un servidor backend y una base de datos.
 
