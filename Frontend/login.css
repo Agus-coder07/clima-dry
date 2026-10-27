@@ -1,0 +1,172 @@
+/* ============================================================
+   ESTILOS DE LA PANTALLA DE LOGIN (solo diseno)
+   ------------------------------------------------------------
+   PALETA DE COLORES BASE (cambialos aqui):
+   ============================================================ */
+
+:root {
+    --naranja: #e8732a;
+    --naranja-oscuro: #c85d19;
+    --gris: #4a4a4a;
+    --gris-claro: #ededed;
+    --blanco: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ---------- FONDO CON LOS COLORES ---------- */
+.login-contenedor {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--naranja) 0%, var(--gris) 100%);
+    padding: 20px;
+}
+
+/* ---------- TARJETA BLANCA ---------- */
+.login-tarjeta {
+    background: var(--blanco);
+    width: 100%;
+    max-width: 380px;
+    padding: 40px 32px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.login-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.login-titulo {
+    color: var(--naranja);
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.login-subtitulo {
+    color: var(--gris);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+/* ---------- ETIQUETAS Y CAMPOS ---------- */
+label {
+    display: block;
+    text-align: left;
+    color: var(--gris);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 14px 0 6px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--gris-claro);
+    border-radius: 10px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--naranja);
+}
+
+/* ---------- CAMPO DE CONTRASENA CON EL OJO ---------- */
+.campo-contrasena { position: relative; }
+
+.campo-contrasena input { padding-right: 44px; }
+
+.ojo {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+.ojo:hover { opacity: 1; }
+
+/* ---------- AVISO DE COINCIDENCIA ---------- */
+.aviso-coincidencia {
+    text-align: left;
+    font-size: 12px;
+    margin-top: 6px;
+    min-height: 16px;
+}
+
+/* ---------- MENSAJE DE ERROR ---------- */
+/* Empieza oculto; se muestra cuando tiene texto (lo pone el backend/JS) */
+.login-error {
+    display: none;
+    background: #ffe3e3;
+    color: #c0392b;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.login-error.visible { display: block; }
+
+/* ---------- MENSAJE DE EXITO (ej. registro correcto) ---------- */
+.login-ok {
+    display: none;
+    background: #e3f8e8;
+    color: #2e7d32;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.login-ok.visible { display: block; }
+
+/* ---------- PIE: enlace entre acceso y registro ---------- */
+.login-pie {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--gris);
+}
+
+.login-pie a {
+    color: var(--naranja);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-pie a:hover { text-decoration: underline; }
+
+/* ---------- BOTON INGRESAR ---------- */
+.boton-ingresar {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    background: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.boton-ingresar:hover { background: var(--naranja-oscuro); }

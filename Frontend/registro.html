@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  REGISTRO (solo diseno)
+  ------------------------------------------------------------
+  Pantalla para CREAR una cuenta nueva:
+    usuario + contrasena + confirmar contrasena (contrasena X2).
+
+  PARA EL COMPANERO DEL BACKEND:
+   - El <form id="form-registro"> tiene action="#" y method="post".
+     Cambialo por la URL real (ej. action="/registro") o usa fetch().
+   - Campos listos:  usuario, contrasena, contrasena2
+   - #registro-error / #registro-ok para mostrar mensajes.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Crear Cuenta</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <!-- FONDO CON LOS COLORES (naranja, gris, blanco) -->
+    <div class="login-contenedor">
+
+        <div class="login-tarjeta">
+
+            <!-- <img src="img/logo.png" alt="Logo" class="login-logo"> -->
+
+            <h1 class="login-titulo">Crear cuenta</h1>
+            <p class="login-subtitulo">Registra un nuevo usuario</p>
+
+            <!-- Mensajes de error / exito (los llena el backend/JS) -->
+            <div class="login-error" id="registro-error"></div>
+            <div class="login-ok" id="registro-ok"></div>
+
+            <!-- FORMULARIO DE REGISTRO -->
+            <form id="form-registro" method="post" action="#">
+
+                <!-- CAMPO USUARIO -->
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario"
+                       placeholder="Elige un usuario" required>
+
+                <!-- CONTRASENA -->
+                <label for="contrasena">Contrasena</label>
+                <div class="campo-contrasena">
+                    <input type="password" id="contrasena" name="contrasena"
+                           placeholder="Crea una contrasena" required>
+                    <button type="button" class="ojo" id="ojo">&#128065;</button>
+                </div>
+
+                <!-- CONFIRMAR CONTRASENA (contrasena X2) -->
+                <label for="contrasena2">Confirmar contrasena</label>
+                <div class="campo-contrasena">
+                    <input type="password" id="contrasena2" name="contrasena2"
+                           placeholder="Repite tu contrasena" required>
+                    <button type="button" class="ojo" id="ojo2">&#128065;</button>
+                </div>
+
+                <!-- Aviso de si las contrasenas coinciden -->
+                <div class="aviso-coincidencia" id="aviso-coincidencia"></div>
+
+                <!-- BOTON REGISTRAR -->
+                <button type="submit" class="boton-ingresar">REGISTRARME</button>
+            </form>
+
+            <!-- Enlace de regreso al acceso -->
+            <p class="login-pie">
+                Ya tienes cuenta?
+                <a href="login.html">Iniciar sesion</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/registro.js"></script>
+</body>
+</html>

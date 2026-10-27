@@ -1,0 +1,267 @@
+/* ============================================================
+   ESTILOS DE LAS SUBPAGINAS (Usuario, Pronostico, Reporte...)
+   ------------------------------------------------------------
+   Se usan JUNTO con dashboard.css (que trae la barra de iconos
+   y los colores). Aqui va solo lo propio de las paginas de
+   detalle: cabecera, tarjetas de seccion, tablas y formularios.
+   PALETA heredada: naranja, gris, blanco.
+   ============================================================ */
+
+/* ---------- CABECERA DE LA SUBPAGINA ---------- */
+.sub-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    background: var(--blanco);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Boton/enlace para volver al dashboard */
+.boton-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--gris);
+    background: var(--gris-claro);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+}
+
+.boton-volver:hover {
+    background: var(--naranja);
+    color: var(--blanco);
+}
+
+.sub-titulo {
+    font-size: 20px;
+    color: var(--naranja);
+    flex: 1;
+}
+
+.sub-icono-titulo { font-size: 22px; margin-right: 6px; }
+
+/* ---------- CUERPO DE LA SUBPAGINA ---------- */
+.sub-cuerpo {
+    padding: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Tarjeta de seccion (bloque blanco redondeado) */
+.seccion {
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+}
+
+.seccion-titulo {
+    font-size: 16px;
+    color: var(--gris);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gris-claro);
+}
+
+/* Rejilla de tarjetas pequenas (2 o 3 columnas) */
+.rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+/* Mini-tarjeta de dato (etiqueta + valor) */
+.mini {
+    background: var(--gris-claro);
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid var(--naranja);
+}
+
+.mini-etiqueta {
+    font-size: 12px;
+    color: var(--gris);
+    opacity: 0.75;
+    margin-bottom: 6px;
+}
+
+.mini-valor {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gris);
+}
+
+/* ---------- TABLAS (historial / reportes) ---------- */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla th, .tabla td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.tabla th {
+    color: var(--blanco);
+    background: var(--naranja);
+    font-weight: 600;
+}
+
+.tabla th:first-child { border-top-left-radius: 8px; }
+.tabla th:last-child  { border-top-right-radius: 8px; }
+
+.tabla tr:hover td { background: var(--gris-claro); }
+
+/* ---------- FORMULARIOS (configuracion) ---------- */
+.campo-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.campo-form:last-child { border-bottom: none; }
+
+.campo-form label {
+    font-size: 14px;
+    color: var(--gris);
+    font-weight: 600;
+}
+
+.campo-form input[type="number"],
+.campo-form input[type="text"],
+.campo-form select {
+    padding: 10px 12px;
+    border: 2px solid var(--gris-claro);
+    border-radius: 10px;
+    font-size: 14px;
+    min-width: 120px;
+}
+
+.campo-form input:focus, .campo-form select:focus {
+    outline: none;
+    border-color: var(--naranja);
+}
+
+/* Interruptor reutilizable (on/off) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+}
+.switch input { display: none; }
+.switch .pista {
+    position: absolute;
+    inset: 0;
+    background: var(--gris-medio);
+    border-radius: 28px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.switch .pista::before {
+    content: "";
+    position: absolute;
+    width: 22px; height: 22px;
+    left: 3px; top: 3px;
+    background: var(--blanco);
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+.switch input:checked + .pista { background: var(--naranja); }
+.switch input:checked + .pista::before { transform: translateX(24px); }
+
+/* ---------- BOTONES DE ACCION ---------- */
+.boton-accion {
+    background: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.boton-accion:hover { background: var(--naranja-oscuro); }
+
+.boton-secundario {
+    background: var(--gris-claro);
+    color: var(--gris);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.boton-secundario:hover { background: var(--gris-medio); }
+
+.grupo-botones { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ---------- ETIQUETA DE ESTADO (chips) ---------- */
+.chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.chip-ok    { background: #eefaf0; color: #2e9e4b; }
+.chip-alerta{ background: #fff3e0; color: #c85d19; }
+.chip-info  { background: #e8f1fb; color: #2a8fe8; }
+
+/* ---------- LISTA DE AYUDA (FAQ) ---------- */
+.faq-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gris-claro);
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-pregunta { font-weight: 700; color: var(--gris); margin-bottom: 6px; }
+.faq-respuesta { font-size: 14px; color: var(--gris); opacity: 0.85; }
+
+/* ---------- PERFIL (usuario) ---------- */
+.perfil-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 10px;
+}
+.perfil-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--naranja);
+    color: var(--blanco);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; font-weight: 800;
+}
+.perfil-nombre { font-size: 20px; font-weight: 700; color: var(--gris); }
+.perfil-rol { font-size: 13px; color: var(--gris); opacity: 0.7; }
+
+/* ---------- ZONA DE GRAFICA (marcador) ---------- */
+.grafica-marcador {
+    height: 220px;
+    border: 2px dashed var(--gris-medio);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gris);
+    opacity: 0.6;
+    font-size: 14px;
+    text-align: center;
+}

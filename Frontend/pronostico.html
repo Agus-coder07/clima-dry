@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  SUBPAGINA: PRONOSTICO (solo diseno)
+  Pronostico por hora y por dia. Filas/valores vacios.
+  PARA EL BACKEND: rellena #lista-pronostico y #pron-dias.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Pronostico</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/subpaginas.css">
+</head>
+<body>
+
+    <aside class="menu-iconos" id="menu-iconos">
+        <button class="boton-desplegar" id="boton-desplegar" title="Desplegar menu">
+            <span class="icono">&#9776;</span><span class="etiqueta">Menu</span>
+        </button>
+        <a href="dashboard.html" class="icono-item"><span class="icono">&#127968;</span><span class="etiqueta">Inicio</span></a>
+        <a href="usuario.html" class="icono-item"><span class="icono">&#128100;</span><span class="etiqueta">Usuario</span></a>
+        <a href="pronostico.html" class="icono-item activo"><span class="icono">&#127780;</span><span class="etiqueta">Pronostico</span></a>
+        <a href="reporte.html" class="icono-item"><span class="icono">&#128202;</span><span class="etiqueta">Reporte (Datos)</span></a>
+        <a href="controles.html" class="icono-item"><span class="icono">&#127919;</span><span class="etiqueta">Controles</span></a>
+        <a href="configuracion.html" class="icono-item"><span class="icono">&#9881;</span><span class="etiqueta">Configuracion</span></a>
+        <a href="ayuda.html" class="icono-item"><span class="icono">&#10067;</span><span class="etiqueta">Ayuda</span></a>
+        <a href="dispositivo.html" class="icono-item"><span class="icono">&#128241;</span><span class="etiqueta">Mi dispositivo</span></a>
+        <a href="actualizaciones.html" class="icono-item"><span class="icono">&#128260;</span><span class="etiqueta">Actualizaciones</span></a>
+        <a href="login.html" class="icono-item icono-salir"><span class="icono">&#128682;</span><span class="etiqueta">Cerrar sesion</span></a>
+    </aside>
+
+    <div class="contenido">
+        <header class="sub-cabecera">
+            <a href="dashboard.html" class="boton-volver">&#8592; Volver</a>
+            <h1 class="sub-titulo"><span class="sub-icono-titulo">&#127780;</span>Pronostico</h1>
+        </header>
+
+        <main class="sub-cuerpo">
+
+            <!-- Pronostico por hora -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Por hora</h2>
+                <table class="tabla">
+                    <thead>
+                        <tr><th>Hora</th><th>Clima</th><th>Temperatura</th><th>Humedad</th></tr>
+                    </thead>
+                    <!-- El backend genera estas filas (aqui van vacias de ejemplo) -->
+                    <tbody id="lista-pronostico">
+                        <tr><td>--:--</td><td>&#9728;</td><td>--&deg;C</td><td>--%</td></tr>
+                        <tr><td>--:--</td><td>&#9925;</td><td>--&deg;C</td><td>--%</td></tr>
+                        <tr><td>--:--</td><td>&#9729;</td><td>--&deg;C</td><td>--%</td></tr>
+                        <tr><td>--:--</td><td>&#9728;</td><td>--&deg;C</td><td>--%</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Pronostico por dia -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Proximos dias</h2>
+                <div class="rejilla" id="pron-dias">
+                    <div class="mini"><p class="mini-etiqueta">-- (dia)</p><p class="mini-valor">&#9728; --&deg;C</p></div>
+                    <div class="mini"><p class="mini-etiqueta">-- (dia)</p><p class="mini-valor">&#9925; --&deg;C</p></div>
+                    <div class="mini"><p class="mini-etiqueta">-- (dia)</p><p class="mini-valor">&#9729; --&deg;C</p></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>

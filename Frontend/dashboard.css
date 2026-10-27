@@ -1,0 +1,414 @@
+/* ============================================================
+   ESTILOS DEL DASHBOARD (solo diseno)
+   PALETA: naranja, gris, blanco.
+   ============================================================ */
+
+:root {
+    --naranja: #e8732a;
+    --naranja-oscuro: #c85d19;
+    --naranja-claro: #ffd9bf;
+    --gris: #4a4a4a;
+    --gris-claro: #f2f2f2;
+    --gris-medio: #d9d9d9;
+    --blanco: #ffffff;
+    --ancho-menu: 70px;    /* ancho de la barra de iconos (contraida) */
+    --ancho-menu-abierto: 230px; /* ancho cuando se despliega */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ---------- FONDO DISENADO ---------- */
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, var(--naranja-claro) 0%, transparent 40%),
+        linear-gradient(160deg, var(--gris-claro) 0%, var(--blanco) 100%);
+    color: var(--gris);
+}
+
+/* ============================================================
+   MENU LATERAL DE ICONOS
+   ------------------------------------------------------------
+   Estado por defecto (CONTRAIDO): barra delgada, solo iconos,
+   el nombre aparece como tooltip al pasar el cursor.
+   Estado .expandido: la barra se ensancha y muestra el nombre.
+   ============================================================ */
+.menu-iconos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--ancho-menu);
+    height: 100%;
+    background: var(--gris);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 12px;
+    gap: 6px;
+    z-index: 1000;
+    overflow: hidden;
+    transition: width 0.25s ease;   /* animacion al desplegar */
+}
+
+.menu-iconos.expandido {
+    width: var(--ancho-menu-abierto);
+}
+
+/* ---------- BOTON PARA DESPLEGAR / CONTRAER ---------- */
+.boton-desplegar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: none;
+    border: none;
+    color: var(--blanco);
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    transition: background 0.2s;
+}
+
+.boton-desplegar:hover {
+    background: var(--naranja);
+}
+
+/* Cada opcion del menu */
+.icono-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 46px;
+    padding: 0 12px;
+    border-radius: 12px;
+    color: var(--blanco);
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.icono-item:hover {
+    background: var(--naranja);
+}
+
+/* Opcion ACTIVA (la pagina en la que estas ahora) */
+.icono-item.activo {
+    background: var(--naranja);
+}
+
+.icono {
+    font-size: 22px;
+    line-height: 1;
+    width: 22px;              /* ancho fijo para que todo quede alineado */
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* ---------- NOMBRE DE CADA OPCION (.etiqueta) ----------
+   Tiene DOS comportamientos segun el estado del menu: */
+
+/* 1) MENU CONTRAIDO -> la etiqueta se comporta como TOOLTIP
+      (flotante a la derecha, oculta, aparece al pasar el cursor) */
+.menu-iconos:not(.expandido) .icono-item .etiqueta {
+    position: absolute;
+    left: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--gris);
+    color: var(--blanco);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    z-index: 5;
+}
+
+/* Flechita del tooltip */
+.menu-iconos:not(.expandido) .icono-item .etiqueta::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 5px 5px 5px 0;
+    border-style: solid;
+    border-color: transparent var(--gris) transparent transparent;
+}
+
+.menu-iconos:not(.expandido) .icono-item:hover .etiqueta {
+    opacity: 1;
+}
+
+/* En modo contraido, el texto del boton 'Menu' no se ve */
+.menu-iconos:not(.expandido) .boton-desplegar .etiqueta {
+    display: none;
+}
+
+/* 2) MENU EXPANDIDO -> la etiqueta se ve inline (texto normal) */
+.menu-iconos.expandido .etiqueta {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Empuja 'Cerrar sesion' hasta abajo */
+.icono-salir {
+    margin-top: auto;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.icono-salir:hover {
+    background: var(--naranja-oscuro);
+}
+
+/* ============================================================
+   CONTENIDO (se recorre segun el ancho del menu)
+   ============================================================ */
+.contenido {
+    margin-left: var(--ancho-menu);
+    transition: margin-left 0.25s ease;
+}
+
+/* Cuando el menu esta desplegado, el contenido se recorre mas */
+.menu-iconos.expandido ~ .contenido {
+    margin-left: var(--ancho-menu-abierto);
+}
+
+/* ============================================================
+   CABECERA (arriba): titulo a la izquierda,
+   saludo + recuadro verde a la DERECHA (como el boceto).
+   ============================================================ */
+.barra-superior {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 24px;
+    background: var(--blanco);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.titulo-panel {
+    font-size: 20px;
+    color: var(--naranja);
+    flex: 1;
+    padding-top: 6px;
+}
+
+/* Columna derecha: saludo arriba, recuadro verde debajo */
+.cabecera-derecha {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.saludo {
+    font-size: 14px;
+    color: var(--gris);
+    font-weight: 600;
+}
+
+/* Recuadro con borde verde (del boceto) */
+.recuadro-verde {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #2e9e4b;
+    color: #2e9e4b;
+    background: #eefaf0;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.punto-verde {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2e9e4b;
+}
+
+/* ============================================================
+   CUERPO: dos filas (monitoreo arriba, control abajo)
+   ============================================================ */
+.cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+}
+
+/* ------------------------------------------------------------
+   1. PANEL DE MONITOREO (centro-arriba)
+   Una tarjeta ancha, centrada, con 3 grupos en fila:
+   clima (temp+hum) | pronostico | fecha (dia+hora)
+   ------------------------------------------------------------ */
+.panel-monitoreo {
+    background: var(--blanco);
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 28px;
+    max-width: 900px;
+    margin: 0 auto;          /* centrado */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+/* Etiqueta pequena gris (comun a varios bloques) */
+.dato-etiqueta {
+    font-size: 13px;
+    color: var(--gris);
+    opacity: 0.75;
+    margin-bottom: 6px;
+}
+
+/* ----- Grupo clima: temperatura + humedad ----- */
+.grupo-clima {
+    display: flex;
+    gap: 16px;
+}
+
+.caja-dato {
+    background: var(--gris-claro);
+    border-radius: 14px;
+    padding: 18px 22px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.dato-valor {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.caja-temp { border-top: 4px solid var(--naranja); }
+.caja-temp .dato-valor { color: var(--naranja); }
+
+.caja-hum { border-top: 4px solid #2a8fe8; }
+.caja-hum .dato-valor { color: #2a8fe8; }
+
+/* ----- Grupo pronostico: icono del clima ----- */
+.grupo-pronostico {
+    text-align: center;
+}
+
+.icono-clima {
+    font-size: 56px;
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ----- Grupo fecha: dia + hora ----- */
+.grupo-fecha {
+    display: flex;
+    gap: 16px;
+}
+
+.caja-fecha {
+    text-align: center;
+    min-width: 90px;
+}
+
+.fecha-valor {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gris);
+}
+
+/* ------------------------------------------------------------
+   2. FILA DE CONTROL (abajo)
+   estado del riel | indicador circular | control manual
+   ------------------------------------------------------------ */
+.fila-control {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.control-caja {
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.estado-riel { border-left: 5px solid var(--naranja); }
+
+.valor-estado {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gris);
+}
+
+/* ----- Indicador circular (centro) ----- */
+.circulo-indicador {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--gris-medio);     /* gris = inactivo por defecto */
+    box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.6);
+    transition: background 0.3s;
+}
+
+/* Cuando el sistema esta activo (clase que agrega el JS) */
+.circulo-indicador.activo {
+    background: #2e9e4b;                /* verde = activo */
+}
+
+/* ----- Boton de control manual ----- */
+.boton-manual {
+    background: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.boton-manual:hover { background: var(--naranja-oscuro); }
+
+/* Cuando el modo manual esta activo (clase que agrega el JS) */
+.boton-manual.activo {
+    background: var(--gris);
+}
+
+.estado-modo {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width: 760px) {
+    .panel-monitoreo { flex-direction: column; }
+    .fila-control { flex-direction: column; align-items: stretch; }
+}
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  SUBPAGINA: CONTROLES (solo diseno)
+  Control manual del riel / sistema. Botones sin accion real.
+  PARA EL BACKEND: conectar cada boton/switch con el equipo.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Controles</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/subpaginas.css">
+</head>
+<body>
+
+    <aside class="menu-iconos" id="menu-iconos">
+        <button class="boton-desplegar" id="boton-desplegar" title="Desplegar menu">
+            <span class="icono">&#9776;</span><span class="etiqueta">Menu</span>
+        </button>
+        <a href="dashboard.html" class="icono-item"><span class="icono">&#127968;</span><span class="etiqueta">Inicio</span></a>
+        <a href="usuario.html" class="icono-item"><span class="icono">&#128100;</span><span class="etiqueta">Usuario</span></a>
+        <a href="pronostico.html" class="icono-item"><span class="icono">&#127780;</span><span class="etiqueta">Pronostico</span></a>
+        <a href="reporte.html" class="icono-item"><span class="icono">&#128202;</span><span class="etiqueta">Reporte (Datos)</span></a>
+        <a href="controles.html" class="icono-item activo"><span class="icono">&#127919;</span><span class="etiqueta">Controles</span></a>
+        <a href="configuracion.html" class="icono-item"><span class="icono">&#9881;</span><span class="etiqueta">Configuracion</span></a>
+        <a href="ayuda.html" class="icono-item"><span class="icono">&#10067;</span><span class="etiqueta">Ayuda</span></a>
+        <a href="dispositivo.html" class="icono-item"><span class="icono">&#128241;</span><span class="etiqueta">Mi dispositivo</span></a>
+        <a href="actualizaciones.html" class="icono-item"><span class="icono">&#128260;</span><span class="etiqueta">Actualizaciones</span></a>
+        <a href="login.html" class="icono-item icono-salir"><span class="icono">&#128682;</span><span class="etiqueta">Cerrar sesion</span></a>
+    </aside>
+
+    <div class="contenido">
+        <header class="sub-cabecera">
+            <a href="dashboard.html" class="boton-volver">&#8592; Volver</a>
+            <h1 class="sub-titulo"><span class="sub-icono-titulo">&#127919;</span>Controles</h1>
+        </header>
+
+        <main class="sub-cuerpo">
+
+            <!-- Modo de operacion -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Modo de operacion</h2>
+                <div class="campo-form">
+                    <label>Modo manual (desactiva el automatico)</label>
+                    <label class="switch">
+                        <input type="checkbox" id="ctrl-modo-manual">
+                        <span class="pista"></span>
+                    </label>
+                </div>
+                <p style="font-size:13px; opacity:0.7; margin-top:8px;">
+                    Estado actual: <span class="chip chip-info" id="ctrl-estado">Automatico</span>
+                </p>
+            </section>
+
+            <!-- Mover el riel -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Movimiento del riel</h2>
+                <p style="font-size:13px; opacity:0.7; margin-bottom:14px;">
+                    Disponible solo en modo manual.
+                </p>
+                <div class="grupo-botones">
+                    <button class="boton-accion" id="btn-sacar">Sacar al sol &#9728;</button>
+                    <button class="boton-accion" id="btn-guardar">Guardar (techo) &#127969;</button>
+                    <button class="boton-secundario" id="btn-detener">Detener</button>
+                </div>
+            </section>
+
+            <!-- Parametros -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Parametros rapidos</h2>
+                <div class="campo-form">
+                    <label>Velocidad del motor</label>
+                    <select id="ctrl-velocidad">
+                        <option>Baja</option><option>Media</option><option>Alta</option>
+                    </select>
+                </div>
+                <div class="campo-form">
+                    <label>Riego automatico de emergencia</label>
+                    <label class="switch"><input type="checkbox" id="ctrl-riego"><span class="pista"></span></label>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>
