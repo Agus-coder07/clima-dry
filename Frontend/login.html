@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  LOGIN / ACCESO (solo diseno)
+  ------------------------------------------------------------
+  Pantalla simple para INICIAR SESION: usuario + contrasena.
+  (El registro de usuarios nuevos esta en  registro.html)
+
+  PARA EL COMPANERO DEL BACKEND:
+   - El <form id="form-login"> tiene action="#" y method="post".
+     Cambialo por la URL real (ej. action="/login") o usa fetch().
+   - Campos listos:  usuario, contrasena
+   - #login-error es donde mostrar el error de credenciales.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Iniciar Sesion</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <!-- FONDO CON LOS COLORES (naranja, gris, blanco) -->
+    <div class="login-contenedor">
+
+        <div class="login-tarjeta">
+
+            <!--
+              AQUI PUEDES PONER TU LOGO / IMAGEN.
+              Coloca el archivo en  img/  y descomenta la linea de abajo:
+            -->
+            <!-- <img src="img/logo.png" alt="Logo" class="login-logo"> -->
+
+            <h1 class="login-titulo">AXIS</h1>
+            <p class="login-subtitulo">Inicia sesion para continuar</p>
+
+            <!-- Mensaje de error (vacio por defecto; lo llena el backend/JS) -->
+            <div class="login-error" id="login-error"></div>
+
+            <!-- FORMULARIO DE ACCESO -->
+            <form id="form-login" method="post" action="#">
+
+                <!-- CAMPO USUARIO -->
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario"
+                       placeholder="Escribe tu usuario" required>
+
+                <!-- CAMPO CONTRASENA (con boton para visualizar) -->
+                <label for="contrasena">Contrasena</label>
+                <div class="campo-contrasena">
+                    <input type="password" id="contrasena" name="contrasena"
+                           placeholder="Escribe tu contrasena" required>
+                    <button type="button" class="ojo" id="ojo">&#128065;</button>
+                </div>
+
+                <!-- BOTON INGRESAR -->
+                <button type="submit" class="boton-ingresar">INGRESAR</button>
+            </form>
+
+            <!-- Enlace a la pantalla de registro -->
+            <p class="login-pie">
+                No tienes cuenta?
+                <a href="registro.html">Crear una cuenta</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  SUBPAGINA: USUARIO (solo diseno)
+  Perfil del usuario. Los datos vienen vacios (marcadores).
+  PARA EL BACKEND: rellena los id #u-nombre, #u-correo, etc.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Usuario</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/subpaginas.css">
+</head>
+<body>
+
+    <!-- ===== BARRA DE ICONOS (misma en todas las paginas) ===== -->
+    <aside class="menu-iconos" id="menu-iconos">
+        <button class="boton-desplegar" id="boton-desplegar" title="Desplegar menu">
+            <span class="icono">&#9776;</span><span class="etiqueta">Menu</span>
+        </button>
+        <a href="dashboard.html" class="icono-item"><span class="icono">&#127968;</span><span class="etiqueta">Inicio</span></a>
+        <a href="usuario.html" class="icono-item activo"><span class="icono">&#128100;</span><span class="etiqueta">Usuario</span></a>
+        <a href="pronostico.html" class="icono-item"><span class="icono">&#127780;</span><span class="etiqueta">Pronostico</span></a>
+        <a href="reporte.html" class="icono-item"><span class="icono">&#128202;</span><span class="etiqueta">Reporte (Datos)</span></a>
+        <a href="controles.html" class="icono-item"><span class="icono">&#127919;</span><span class="etiqueta">Controles</span></a>
+        <a href="configuracion.html" class="icono-item"><span class="icono">&#9881;</span><span class="etiqueta">Configuracion</span></a>
+        <a href="ayuda.html" class="icono-item"><span class="icono">&#10067;</span><span class="etiqueta">Ayuda</span></a>
+        <a href="dispositivo.html" class="icono-item"><span class="icono">&#128241;</span><span class="etiqueta">Mi dispositivo</span></a>
+        <a href="actualizaciones.html" class="icono-item"><span class="icono">&#128260;</span><span class="etiqueta">Actualizaciones</span></a>
+        <a href="login.html" class="icono-item icono-salir"><span class="icono">&#128682;</span><span class="etiqueta">Cerrar sesion</span></a>
+    </aside>
+
+    <div class="contenido">
+        <header class="sub-cabecera">
+            <a href="dashboard.html" class="boton-volver">&#8592; Volver</a>
+            <h1 class="sub-titulo"><span class="sub-icono-titulo">&#128100;</span>Usuario</h1>
+        </header>
+
+        <main class="sub-cuerpo">
+
+            <!-- Perfil -->
+            <section class="seccion">
+                <div class="perfil-cabecera">
+                    <div class="perfil-avatar" id="u-inicial">?</div>
+                    <div>
+                        <p class="perfil-nombre" id="u-nombre">--</p>
+                        <p class="perfil-rol" id="u-rol">--</p>
+                    </div>
+                </div>
+                <div class="rejilla">
+                    <div class="mini"><p class="mini-etiqueta">Correo</p><p class="mini-valor" id="u-correo">--</p></div>
+                    <div class="mini"><p class="mini-etiqueta">Telefono</p><p class="mini-valor" id="u-telefono">--</p></div>
+                    <div class="mini"><p class="mini-etiqueta">Miembro desde</p><p class="mini-valor" id="u-desde">--</p></div>
+                </div>
+            </section>
+
+            <!-- Dispositivos vinculados -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Dispositivos vinculados</h2>
+                <div class="rejilla">
+                    <div class="mini"><p class="mini-etiqueta">Secadero principal</p><p class="mini-valor">-- <span class="chip chip-ok">En linea</span></p></div>
+                    <div class="mini"><p class="mini-etiqueta">ID del equipo</p><p class="mini-valor" id="u-id-equipo">--</p></div>
+                </div>
+            </section>
+
+            <!-- Acciones -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Cuenta</h2>
+                <div class="grupo-botones">
+                    <button class="boton-accion">Editar perfil</button>
+                    <button class="boton-secundario">Cambiar contrasena</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>

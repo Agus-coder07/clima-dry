@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  SUBPAGINA: REPORTE / HISTORIAL (solo diseno)
+  Historico de datos: grafica (marcador) + tabla de registros.
+  PARA EL BACKEND: llena #tabla-historial y la grafica.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Reporte</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/subpaginas.css">
+</head>
+<body>
+
+    <aside class="menu-iconos" id="menu-iconos">
+        <button class="boton-desplegar" id="boton-desplegar" title="Desplegar menu">
+            <span class="icono">&#9776;</span><span class="etiqueta">Menu</span>
+        </button>
+        <a href="dashboard.html" class="icono-item"><span class="icono">&#127968;</span><span class="etiqueta">Inicio</span></a>
+        <a href="usuario.html" class="icono-item"><span class="icono">&#128100;</span><span class="etiqueta">Usuario</span></a>
+        <a href="pronostico.html" class="icono-item"><span class="icono">&#127780;</span><span class="etiqueta">Pronostico</span></a>
+        <a href="reporte.html" class="icono-item activo"><span class="icono">&#128202;</span><span class="etiqueta">Reporte (Datos)</span></a>
+        <a href="controles.html" class="icono-item"><span class="icono">&#127919;</span><span class="etiqueta">Controles</span></a>
+        <a href="configuracion.html" class="icono-item"><span class="icono">&#9881;</span><span class="etiqueta">Configuracion</span></a>
+        <a href="ayuda.html" class="icono-item"><span class="icono">&#10067;</span><span class="etiqueta">Ayuda</span></a>
+        <a href="dispositivo.html" class="icono-item"><span class="icono">&#128241;</span><span class="etiqueta">Mi dispositivo</span></a>
+        <a href="actualizaciones.html" class="icono-item"><span class="icono">&#128260;</span><span class="etiqueta">Actualizaciones</span></a>
+        <a href="login.html" class="icono-item icono-salir"><span class="icono">&#128682;</span><span class="etiqueta">Cerrar sesion</span></a>
+    </aside>
+
+    <div class="contenido">
+        <header class="sub-cabecera">
+            <a href="dashboard.html" class="boton-volver">&#8592; Volver</a>
+            <h1 class="sub-titulo"><span class="sub-icono-titulo">&#128202;</span>Reporte e historial</h1>
+        </header>
+
+        <main class="sub-cuerpo">
+
+            <!-- Resumen rapido -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Resumen</h2>
+                <div class="rejilla">
+                    <div class="mini"><p class="mini-etiqueta">Temp. promedio</p><p class="mini-valor">--&deg;C</p></div>
+                    <div class="mini"><p class="mini-etiqueta">Humedad promedio</p><p class="mini-valor">--%</p></div>
+                    <div class="mini"><p class="mini-etiqueta">Ciclos de secado</p><p class="mini-valor">--</p></div>
+                    <div class="mini"><p class="mini-etiqueta">Tiempo total</p><p class="mini-valor">-- h</p></div>
+                </div>
+            </section>
+
+            <!-- Grafica (marcador para el backend/libreria de graficas) -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Temperatura y humedad en el tiempo</h2>
+                <div class="grafica-marcador" id="grafica-historial">
+                    Aqui va la grafica (la conecta el backend o una libreria)
+                </div>
+            </section>
+
+            <!-- Tabla de historial -->
+            <section class="seccion">
+                <h2 class="seccion-titulo">Registros</h2>
+                <table class="tabla">
+                    <thead>
+                        <tr><th>Fecha</th><th>Hora</th><th>Temperatura</th><th>Humedad</th><th>Estado del riel</th></tr>
+                    </thead>
+                    <!-- El backend llena estas filas desde la base de datos -->
+                    <tbody id="tabla-historial">
+                        <tr><td>--/--/--</td><td>--:--</td><td>--&deg;C</td><td>--%</td><td>--</td></tr>
+                        <tr><td>--/--/--</td><td>--:--</td><td>--&deg;C</td><td>--%</td><td>--</td></tr>
+                        <tr><td>--/--/--</td><td>--:--</td><td>--&deg;C</td><td>--%</td><td>--</td></tr>
+                        <tr><td>--/--/--</td><td>--:--</td><td>--&deg;C</td><td>--%</td><td>--</td></tr>
+                    </tbody>
+                </table>
+                <div class="grupo-botones" style="margin-top:16px;">
+                    <button class="boton-accion">Descargar reporte</button>
+                    <button class="boton-secundario">Filtrar por fecha</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>

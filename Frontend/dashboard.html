@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--
+============================================================
+  DASHBOARD (solo diseno)
+  ------------------------------------------------------------
+  MENU: barra delgada de ICONOS a la izquierda. Al pasar el
+  cursor sobre un icono aparece su NOMBRE (tooltip).
+
+  PARA EL COMPANERO DEL BACKEND:
+   - Todos los valores que cambian tienen un id, y de momento
+     muestran "--" como marcador. Solo reemplaza el texto:
+       #valor-temperatura   -> temperatura actual
+       #valor-humedad       -> humedad actual
+       #valor-estado-riel   -> estado del riel
+       #valor-dia           -> dia actual
+       #valor-hora          -> hora actual
+       #icono-pronostico    -> icono del clima (o una imagen)
+       #nombre-usuario      -> nombre del usuario logueado
+   - #indicador-sistema es el circulo de estado (verde = activo).
+   - El boton #modo-manual activa/desactiva el control manual; en
+     dashboard.js hay un comentario de donde conectar el fetch.
+============================================================
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS - Panel</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <!-- ========================================================
+         MENU LATERAL DE ICONOS
+         ------------------------------------------------------------
+         Por defecto es una barra DELGADA de iconos; al pasar el
+         cursor sobre un icono aparece su nombre (tooltip).
+
+         Con el boton de arriba (#boton-desplegar) la barra se
+         ENSANCHA y muestra el nombre junto a cada icono.
+         Al estar ensanchada, el nombre ya se ve inline (no tooltip).
+         ======================================================== -->
+    <aside class="menu-iconos" id="menu-iconos">
+
+        <!-- BOTON PARA DESPLEGAR / CONTRAER LA BARRA -->
+        <button class="boton-desplegar" id="boton-desplegar" title="Desplegar menu">
+            <span class="icono">&#9776;</span>
+            <span class="etiqueta">Menu</span>
+        </button>
+
+        <!-- Inicio = este dashboard (vista en tiempo real).
+             Marcado como 'activo' porque es la pagina actual. -->
+        <a href="dashboard.html" class="icono-item activo">
+            <span class="icono">&#127968;</span>
+            <span class="etiqueta">Inicio</span>
+        </a>
+
+        <a href="usuario.html" class="icono-item">
+            <span class="icono">&#128100;</span>
+            <span class="etiqueta">Usuario</span>
+        </a>
+
+        <a href="pronostico.html" class="icono-item">
+            <span class="icono">&#127780;</span>
+            <span class="etiqueta">Pronostico</span>
+        </a>
+
+        <a href="reporte.html" class="icono-item">
+            <span class="icono">&#128202;</span>
+            <span class="etiqueta">Reporte (Datos)</span>
+        </a>
+
+        <a href="controles.html" class="icono-item">
+            <span class="icono">&#127919;</span>
+            <span class="etiqueta">Controles</span>
+        </a>
+
+        <a href="configuracion.html" class="icono-item">
+            <span class="icono">&#9881;</span>
+            <span class="etiqueta">Configuracion</span>
+        </a>
+
+        <a href="ayuda.html" class="icono-item">
+            <span class="icono">&#10067;</span>
+            <span class="etiqueta">Ayuda</span>
+        </a>
+
+        <a href="dispositivo.html" class="icono-item">
+            <span class="icono">&#128241;</span>
+            <span class="etiqueta">Mi dispositivo</span>
+        </a>
+
+        <a href="actualizaciones.html" class="icono-item">
+            <span class="icono">&#128260;</span>
+            <span class="etiqueta">Actualizaciones</span>
+        </a>
+
+        <!-- Cerrar sesion (hasta abajo) -->
+        <a href="login.html" class="icono-item icono-salir">
+            <span class="icono">&#128682;</span>
+            <span class="etiqueta">Cerrar sesion</span>
+        </a>
+    </aside>
+
+
+    <!-- ========================================================
+         CONTENIDO PRINCIPAL
+         ------------------------------------------------------------
+         Distribucion basada en el boceto de referencia:
+           1. Arriba a la DERECHA: saludo "Hola" + recuadro verde.
+           2. Al CENTRO-ARRIBA: panel de monitoreo
+              (temperatura, humedad, pronostico, dia y hora).
+           3. Abajo: fila de control
+              (estado del riel, indicador circular, control manual).
+         ======================================================== -->
+    <div class="contenido">
+
+        <!-- ---------- CABECERA (arriba a la derecha) ---------- -->
+        <header class="barra-superior">
+            <h1 class="titulo-panel">AXIS</h1>
+
+            <div class="cabecera-derecha">
+                <!-- El backend reemplaza el '--' por el nombre real -->
+                <span class="saludo">Hola, <span id="nombre-usuario">--</span></span>
+
+                <!-- Recuadro con borde verde (del boceto).
+                     Util para un aviso/estado del sistema.
+                     Cambia el texto segun lo que quieras mostrar. -->
+                <div class="recuadro-verde" id="recuadro-estado">
+                    <span class="punto-verde"></span>
+                    <span>Sistema en linea</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="cuerpo">
+
+            <!-- ======================================================
+                 1. PANEL DE MONITOREO (centro-arriba)
+                 ====================================================== -->
+            <section class="panel-monitoreo">
+
+                <!-- Temperatura y humedad (dos cajas contiguas) -->
+                <div class="grupo-clima">
+                    <div class="caja-dato caja-temp">
+                        <p class="dato-etiqueta">Temperatura</p>
+                        <p class="dato-valor"><span id="valor-temperatura">--</span>&deg;C</p>
+                    </div>
+                    <div class="caja-dato caja-hum">
+                        <p class="dato-etiqueta">Humedad</p>
+                        <p class="dato-valor"><span id="valor-humedad">--</span>%</p>
+                    </div>
+                </div>
+
+                <!-- Pronostico (icono clima + etiqueta) -->
+                <div class="grupo-pronostico">
+                    <!-- Puedes cambiar este icono por una imagen de img/ -->
+                    <span class="icono-clima" id="icono-pronostico">&#9925;</span>
+                    <p class="dato-etiqueta">Pronostico</p>
+                </div>
+
+                <!-- Dia y hora -->
+                <div class="grupo-fecha">
+                    <div class="caja-fecha">
+                        <p class="dato-etiqueta">Dia</p>
+                        <p class="fecha-valor" id="valor-dia">--</p>
+                    </div>
+                    <div class="caja-fecha">
+                        <p class="dato-etiqueta">Hora</p>
+                        <p class="fecha-valor" id="valor-hora">--:--</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======================================================
+                 2. FILA DE CONTROL (abajo)
+                 ====================================================== -->
+            <section class="fila-control">
+
+                <!-- Estado del riel (izquierda) -->
+                <div class="control-caja estado-riel">
+                    <p class="dato-etiqueta">Estado del riel</p>
+                    <p class="valor-estado" id="valor-estado-riel">--</p>
+                </div>
+
+                <!-- Indicador circular (centro).
+                     Su color indica si el sistema esta activo. -->
+                <div class="control-caja control-indicador">
+                    <div class="circulo-indicador" id="indicador-sistema"></div>
+                    <p class="dato-etiqueta">Sistema</p>
+                </div>
+
+                <!-- Control manual (derecha).
+                     Boton que activa/desactiva el modo manual. -->
+                <div class="control-caja control-manual">
+                    <button class="boton-manual" id="modo-manual">Control manual</button>
+                    <p class="estado-modo" id="estado-modo">Desactivado</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/menu.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
