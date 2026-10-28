@@ -1,11 +1,14 @@
+
 # Dependencias
 node_modules/
+Backend/node_modules/
 
 # Variables de entorno
 .env
 .env.local
 .env.development
 .env.production
+Backend/.env
 
 # Logs
 *.log
