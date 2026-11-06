@@ -1,54 +1,91 @@
 /* ============================================================
-   SCRIPT DEL REGISTRO (solo diseno)
+   REGISTRO.JS (solo diseno) - AXIS
    ------------------------------------------------------------
-   Hace:
-     1. Mostrar / ocultar las dos contrasenas (botones del ojo).
-     2. Avisar si las contrasenas coinciden.
+   Logica minima de la pantalla de registro:
+     1) Boton "ojo" para mostrar/ocultar la contrasena.
+     2) Validacion basica en el navegador (campos vacios y
+        formato de correo) antes de enviar.
 
-   PARA EL BACKEND:
-     - Mensajes: usa #registro-error (error) y #registro-ok (exito),
-       agregandoles la clase 'visible'.
-     - Para enviar sin recargar, captura el 'submit' del
-       formulario #form-registro y usa fetch().
+   Se quito el "confirmar contrasena", por eso ya NO hay
+   contrasena2, ojo2 ni aviso-coincidencia.
+
+   >>> PUNTO DE CONEXION BACKEND <<<
+   Donde dice "ENVIAR AL BACKEND" tu companero reemplaza el
+   bloque por una llamada real (fetch) o deja que el <form>
+   haga el POST a la URL del servidor.
    ============================================================ */
 
-// ---- 1. MOSTRAR / OCULTAR CONTRASENA ----
-function configurarOjo(idOjo, idInput) {
-    const ojo = document.getElementById(idOjo);
-    const input = document.getElementById(idInput);
-    ojo.addEventListener("click", function () {
-        if (input.type === "password") {
-            input.type = "text";
-            ojo.style.opacity = "1";
-        } else {
-            input.type = "password";
-            ojo.style.opacity = "0.6";
-        }
-    });
-}
+document.addEventListener("DOMContentLoaded", function () {
 
-configurarOjo("ojo", "contrasena");
-configurarOjo("ojo2", "contrasena2");
+    // --- Referencias a los elementos de la pantalla ---
+    var form      = document.getElementById("form-registro");
+    var nombre    = document.getElementById("nombre");
+    var apellido  = document.getElementById("apellido");
+    var correo    = document.getElementById("correo");
+    var usuario   = document.getElementById("usuario");
+    var contrasena= document.getElementById("contrasena");
+    var ojo       = document.getElementById("ojo");
+    var cajaError = document.getElementById("registro-error");
+    var cajaOk    = document.getElementById("registro-ok");
 
-
-// ---- 2. VALIDAR QUE LAS CONTRASENAS COINCIDAN ----
-const pass1 = document.getElementById("contrasena");
-const pass2 = document.getElementById("contrasena2");
-const aviso = document.getElementById("aviso-coincidencia");
-
-function revisarCoincidencia() {
-    if (pass2.value === "") {
-        aviso.textContent = "";
-        return;
+    // --- 1) Mostrar / ocultar contrasena con el boton del ojo ---
+    if (ojo && contrasena) {
+        ojo.addEventListener("click", function () {
+            contrasena.type = (contrasena.type === "password") ? "text" : "password";
+        });
     }
-    if (pass1.value === pass2.value) {
-        aviso.textContent = "\u2714 Las contrasenas coinciden";
-        aviso.style.color = "#2e7d32";
-    } else {
-        aviso.textContent = "\u2716 Las contrasenas no coinciden";
-        aviso.style.color = "#c0392b";
-    }
-}
 
-pass1.addEventListener("input", revisarCoincidencia);
-pass2.addEventListener("input", revisarCoincidencia);
+    // --- 2) Validacion basica al enviar el formulario ---
+    if (form) {
+        form.addEventListener("submit", function (evento) {
+            evento.preventDefault();   // evita recargar la pagina (solo diseno)
+            limpiarMensajes();
+
+            // Campos obligatorios vacios
+            if (!nombre.value || !apellido.value || !correo.value ||
+                !usuario.value || !contrasena.value) {
+                mostrarError("Por favor completa todos los campos.");
+                return;
+            }
+
+            // Formato de correo sencillo
+            var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!patronCorreo.test(correo.value)) {
+                mostrarError("Escribe un correo valido.");
+                return;
+            }
+
+            // ============================================
+            //  >>> ENVIAR AL BACKEND <<<
+            //  Aqui tu companero conecta el servidor, ej:
+            //
+            //  fetch("/registro", {
+            //      method: "POST",
+            //      headers: { "Content-Type": "application/json" },
+            //      body: JSON.stringify({
+            //          nombre:    nombre.value,
+            //          apellido:  apellido.value,
+            //          correo:    correo.value,
+            //          usuario:   usuario.value,
+            //          contrasena: contrasena.value
+            //      })
+            //  });
+            // ============================================
+
+            // Mensaje de exito de ejemplo (solo diseno)
+            mostrarOk("Cuenta creada (demo). Conecta el backend aqui.");
+        });
+    }
+
+    // --- Utilidades para mostrar mensajes ---
+    function mostrarError(texto) {
+        if (cajaError) { cajaError.textContent = texto; cajaError.style.display = "block"; }
+    }
+    function mostrarOk(texto) {
+        if (cajaOk) { cajaOk.textContent = texto; cajaOk.style.display = "block"; }
+    }
+    function limpiarMensajes() {
+        if (cajaError) { cajaError.textContent = ""; cajaError.style.display = "none"; }
+        if (cajaOk)    { cajaOk.textContent = "";    cajaOk.style.display = "none"; }
+    }
+});

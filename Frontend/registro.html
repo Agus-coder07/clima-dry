@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <!--
 ============================================================
-  REGISTRO (solo diseno)
+  REGISTRO (solo diseno) - AXIS
   ------------------------------------------------------------
-  Pantalla para CREAR una cuenta nueva:
-    usuario + contrasena + confirmar contrasena (contrasena X2).
+  Pantalla para CREAR una cuenta nueva.
+  Campos: nombre + apellido + correo + usuario + contrasena.
+  (Se quito el "confirmar contrasena" a peticion del usuario.)
 
   PARA EL COMPANERO DEL BACKEND:
    - El <form id="form-registro"> tiene action="#" y method="post".
      Cambialo por la URL real (ej. action="/registro") o usa fetch().
-   - Campos listos:  usuario, contrasena, contrasena2
+   - Campos listos:  nombre, apellido, correo, usuario, contrasena
    - #registro-error / #registro-ok para mostrar mensajes.
 ============================================================
 -->
@@ -30,7 +31,7 @@
             <!-- <img src="img/logo.png" alt="Logo" class="login-logo"> -->
 
             <h1 class="login-titulo">Crear cuenta</h1>
-            <p class="login-subtitulo">Registra un nuevo usuario</p>
+            <p class="login-subtitulo">Registra un nuevo usuario en AXIS</p>
 
             <!-- Mensajes de error / exito (los llena el backend/JS) -->
             <div class="login-error" id="registro-error"></div>
@@ -38,6 +39,21 @@
 
             <!-- FORMULARIO DE REGISTRO -->
             <form id="form-registro" method="post" action="#">
+
+                <!-- CAMPO NOMBRE -->
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre"
+                       placeholder="Tu nombre" required>
+
+                <!-- CAMPO APELLIDO -->
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido"
+                       placeholder="Tu apellido" required>
+
+                <!-- CAMPO CORREO -->
+                <label for="correo">Correo</label>
+                <input type="email" id="correo" name="correo"
+                       placeholder="ejemplo@correo.com" required>
 
                 <!-- CAMPO USUARIO -->
                 <label for="usuario">Usuario</label>
@@ -51,17 +67,6 @@
                            placeholder="Crea una contrasena" required>
                     <button type="button" class="ojo" id="ojo">&#128065;</button>
                 </div>
-
-                <!-- CONFIRMAR CONTRASENA (contrasena X2) -->
-                <label for="contrasena2">Confirmar contrasena</label>
-                <div class="campo-contrasena">
-                    <input type="password" id="contrasena2" name="contrasena2"
-                           placeholder="Repite tu contrasena" required>
-                    <button type="button" class="ojo" id="ojo2">&#128065;</button>
-                </div>
-
-                <!-- Aviso de si las contrasenas coinciden -->
-                <div class="aviso-coincidencia" id="aviso-coincidencia"></div>
 
                 <!-- BOTON REGISTRAR -->
                 <button type="submit" class="boton-ingresar">REGISTRARME</button>
