@@ -15,9 +15,8 @@ const frontendPath = path.join(__dirname, "../Frontend");
 
 // Dashboard que corresponde a cada rol (ajusta los nombres a tus archivos)
 const DASHBOARDS = {
-    admin: "dashboard-admin.html",
-    tecnico: "dashboard-tecnico.html",
-    cliente: "dashboard-cliente.html",
+    Administrador: "dashboard.html",
+    Operador: "dashboard.html",
 };
 
 // Middleware
@@ -39,25 +38,19 @@ app.use(
 );
 
 // Protección de dashboards: va ANTES de express.static
-function requiereRol(rol) {
-    return (req, res, next) => {
-        if (!req.session.usuario) {
-            return res.redirect("/login.html");
-        }
+// Protección del dashboard: va ANTES de express.static
+function requiereSesion(req, res, next) {
+    if (!req.session.usuario) {
+        return res.redirect("/login.html");
+    }
 
-        if (req.session.usuario.rol !== rol) {
-            return res.redirect("/" + DASHBOARDS[req.session.usuario.rol]);
-        }
-
-        next();
-    };
+    next();
 }
 
-for (const [rol, archivo] of Object.entries(DASHBOARDS)) {
-    app.get("/" + archivo, requiereRol(rol), (req, res) => {
-        res.sendFile(path.join(frontendPath, archivo));
-    });
-}
+app.get("/dashboard.html", requiereSesion, (req, res) => {
+    res.sendFile(path.join(frontendPath, "dashboard.html"));
+});
+
 
 // Servir los archivos del frontend sin modificar su estructura
 app.use(express.static(frontendPath));
@@ -116,6 +109,131 @@ app.get("/api/health/db", async (req, res) => {
     }
 });
 
+// REGISTRO DE NUEVOS USUARIOS
+app.post("/api/registro", async (req, res) => {
+    try {
+        const { nombre, apellido, correo, password } = req.body || {};
+
+        // Validar que todos los campos sean texto
+        if (
+            typeof nombre !== "string" ||
+            typeof apellido !== "string" ||
+            typeof correo !== "string" ||
+            typeof password !== "string"
+        ) {
+            return res.status(400).json({
+                mensaje: "Todos los campos son obligatorios."
+            });
+        }
+
+        const nombreLimpio = nombre.trim();
+        const apellidoLimpio = apellido.trim();
+        const correoLimpio = correo.trim().toLowerCase();
+
+        // Validar campos vacíos y longitudes
+        if (
+            !nombreLimpio ||
+            !apellidoLimpio ||
+            !correoLimpio ||
+            !password
+        ) {
+            return res.status(400).json({
+                mensaje: "Por favor completa todos los campos."
+            });
+        }
+
+        if (nombreLimpio.length > 50 || apellidoLimpio.length > 50) {
+            return res.status(400).json({
+                mensaje: "El nombre y el apellido no deben superar 50 caracteres."
+            });
+        }
+
+        if (correoLimpio.length > 254) {
+            return res.status(400).json({
+                mensaje: "El correo electrónico es demasiado largo."
+            });
+        }
+
+        const patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!patronCorreo.test(correoLimpio)) {
+            return res.status(400).json({
+                mensaje: "Escribe un correo electrónico válido."
+            });
+        }
+
+        if (password.length < 8) {
+            return res.status(400).json({
+                mensaje: "La contraseña debe tener al menos 8 caracteres."
+            });
+        }
+
+        if (Buffer.byteLength(password, "utf8") > 72) {
+            return res.status(400).json({
+                mensaje: "La contraseña es demasiado larga."
+            });
+        }
+
+        // Cifrar la contraseña antes de guardarla
+        const contrasenaCifrada = await bcrypt.hash(password, 12);
+
+        // El rol Operador se asigna exclusivamente desde el servidor
+        const resultado = await pool.query(
+            `INSERT INTO public.usuario (
+                id_rol,
+                nombre,
+                apellido,
+                correo,
+                contrasena_cifrada
+            )
+            SELECT
+                id_rol,
+                $1,
+                $2,
+                $3,
+                $4
+            FROM public.rol
+            WHERE nombre = 'Operador'
+            RETURNING id_usuario, nombre, apellido, correo`,
+            [
+                nombreLimpio,
+                apellidoLimpio,
+                correoLimpio,
+                contrasenaCifrada
+            ]
+        );
+
+        if (resultado.rowCount === 0) {
+            console.error("No se encontró el rol Operador en la base de datos.");
+
+            return res.status(500).json({
+                mensaje: "No se pudo completar el registro. Verifica la configuración de roles."
+            });
+        }
+
+        return res.status(201).json({
+            mensaje: "Cuenta creada correctamente. Ya puedes iniciar sesión.",
+            usuario: resultado.rows[0]
+        });
+
+    } catch (error) {
+        // Correo duplicado
+        if (error.code === "23505") {
+            return res.status(409).json({
+                mensaje: "Ese correo electrónico ya está registrado."
+            });
+        }
+
+        console.error("Error al registrar usuario:", error.message);
+
+        return res.status(500).json({
+            mensaje: "Ocurrió un error al crear la cuenta."
+        });
+    }
+});
+
+
+
 // Iniciar sesión
 app.post("/api/login", async (req, res) => {
     try {
@@ -128,14 +246,26 @@ app.post("/api/login", async (req, res) => {
         }
 
         const resultado = await pool.query(
-            "SELECT id, nombre, correo, password, rol FROM usuarios WHERE correo = $1",
-            [correo]
-        );
+    `SELECT
+        u.id_usuario,
+        u.nombre,
+        u.apellido,
+        u.correo,
+        u.contrasena_cifrada,
+        r.nombre AS rol
+     FROM public.usuario AS u
+     INNER JOIN public.rol AS r
+        ON u.id_rol = r.id_rol
+     WHERE LOWER(u.correo) = LOWER($1)
+     LIMIT 1`,
+    [correo.trim()]
+);
 
-        const usuario = resultado.rows[0];
+const usuario = resultado.rows[0];
+
 
         // Mismo mensaje en ambos casos para no revelar si el correo existe
-        if (!usuario || !(await bcrypt.compare(password, usuario.password))) {
+        if (!usuario || !(await bcrypt.compare(password, usuario.contrasena_cifrada))){
             return res
                 .status(401)
                 .json({ mensaje: "Correo o contraseña incorrectos" });
@@ -150,10 +280,12 @@ app.post("/api/login", async (req, res) => {
         }
 
         req.session.usuario = {
-            id: usuario.id,
-            nombre: usuario.nombre,
-            rol: usuario.rol,
-        };
+    id: usuario.id_usuario,
+    nombre: usuario.nombre,
+    apellido: usuario.apellido,
+    correo: usuario.correo,
+    rol: usuario.rol,
+};
 
         res.json({
             mensaje: "Inicio de sesión correcto",
