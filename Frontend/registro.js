@@ -1,91 +1,106 @@
-/* ============================================================
-   REGISTRO.JS (solo diseno) - AXIS
-   ------------------------------------------------------------
-   Logica minima de la pantalla de registro:
-     1) Boton "ojo" para mostrar/ocultar la contrasena.
-     2) Validacion basica en el navegador (campos vacios y
-        formato de correo) antes de enviar.
 
-   Se quito el "confirmar contrasena", por eso ya NO hay
-   contrasena2, ojo2 ni aviso-coincidencia.
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("form-registro");
 
-   >>> PUNTO DE CONEXION BACKEND <<<
-   Donde dice "ENVIAR AL BACKEND" tu companero reemplaza el
-   bloque por una llamada real (fetch) o deja que el <form>
-   haga el POST a la URL del servidor.
-   ============================================================ */
+    const nombre = document.getElementById("nombre");
+    const apellido = document.getElementById("apellido");
+    const correo = document.getElementById("correo");
+    const contrasena = document.getElementById("contrasena");
 
-document.addEventListener("DOMContentLoaded", function () {
+    const ojo = document.getElementById("ojo");
+    const cajaError = document.getElementById("registro-error");
+    const cajaOk = document.getElementById("registro-ok");
+    const boton = form.querySelector('button[type="submit"]');
 
-    // --- Referencias a los elementos de la pantalla ---
-    var form      = document.getElementById("form-registro");
-    var nombre    = document.getElementById("nombre");
-    var apellido  = document.getElementById("apellido");
-    var correo    = document.getElementById("correo");
-    var usuario   = document.getElementById("usuario");
-    var contrasena= document.getElementById("contrasena");
-    var ojo       = document.getElementById("ojo");
-    var cajaError = document.getElementById("registro-error");
-    var cajaOk    = document.getElementById("registro-ok");
-
-    // --- 1) Mostrar / ocultar contrasena con el boton del ojo ---
+    // Mostrar u ocultar contraseña
     if (ojo && contrasena) {
-        ojo.addEventListener("click", function () {
-            contrasena.type = (contrasena.type === "password") ? "text" : "password";
+        ojo.addEventListener("click", () => {
+            const mostrar = contrasena.type === "password";
+
+            contrasena.type = mostrar ? "text" : "password";
+            ojo.style.opacity = mostrar ? "1" : "0.6";
         });
     }
 
-    // --- 2) Validacion basica al enviar el formulario ---
-    if (form) {
-        form.addEventListener("submit", function (evento) {
-            evento.preventDefault();   // evita recargar la pagina (solo diseno)
-            limpiarMensajes();
+    // Enviar registro al backend
+    form.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
 
-            // Campos obligatorios vacios
-            if (!nombre.value || !apellido.value || !correo.value ||
-                !usuario.value || !contrasena.value) {
-                mostrarError("Por favor completa todos los campos.");
-                return;
+        limpiarMensajes();
+
+        const datosUsuario = {
+            nombre: nombre.value.trim(),
+            apellido: apellido.value.trim(),
+            correo: correo.value.trim(),
+            password: contrasena.value
+        };
+
+        if (
+            !datosUsuario.nombre ||
+            !datosUsuario.apellido ||
+            !datosUsuario.correo ||
+            !datosUsuario.password
+        ) {
+            mostrarError("Por favor completa todos los campos.");
+            return;
+        }
+
+        const patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!patronCorreo.test(datosUsuario.correo)) {
+            mostrarError("Escribe un correo electrónico válido.");
+            return;
+        }
+
+        boton.disabled = true;
+
+        try {
+            const respuesta = await fetch("/api/registro", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datosUsuario)
+            });
+
+            const datos = await respuesta.json();
+
+            if (!respuesta.ok) {
+                throw new Error(
+                    datos.mensaje || "No se pudo crear la cuenta."
+                );
             }
 
-            // Formato de correo sencillo
-            var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!patronCorreo.test(correo.value)) {
-                mostrarError("Escribe un correo valido.");
-                return;
-            }
+            mostrarOk(
+                datos.mensaje || "Cuenta creada correctamente. Ya puedes iniciar sesión."
+            );
 
-            // ============================================
-            //  >>> ENVIAR AL BACKEND <<<
-            //  Aqui tu companero conecta el servidor, ej:
-            //
-            //  fetch("/registro", {
-            //      method: "POST",
-            //      headers: { "Content-Type": "application/json" },
-            //      body: JSON.stringify({
-            //          nombre:    nombre.value,
-            //          apellido:  apellido.value,
-            //          correo:    correo.value,
-            //          usuario:   usuario.value,
-            //          contrasena: contrasena.value
-            //      })
-            //  });
-            // ============================================
+            form.reset();
 
-            // Mensaje de exito de ejemplo (solo diseno)
-            mostrarOk("Cuenta creada (demo). Conecta el backend aqui.");
-        });
-    }
+        } catch (error) {
+            mostrarError(
+                error.message || "No se pudo conectar con el servidor."
+            );
+        } finally {
+            boton.disabled = false;
+        }
+    });
 
-    // --- Utilidades para mostrar mensajes ---
     function mostrarError(texto) {
-        if (cajaError) { cajaError.textContent = texto; cajaError.style.display = "block"; }
+        cajaError.textContent = texto;
+        cajaError.style.display = "block";
     }
+
     function mostrarOk(texto) {
-        if (cajaOk) { cajaOk.textContent = texto; cajaOk.style.display = "block"; }
+        cajaOk.textContent = texto;
+        cajaOk.style.display = "block";
     }
+
     function limpiarMensajes() {
-        if (cajaError) { cajaError.textContent = ""; cajaError.style.display = "none"; }
-        if (cajaOk)    { cajaOk.textContent = "";    cajaOk.style.display = "none"; }
+        cajaError.textContent = "";
+        cajaError.style.display = "none";
+
+        cajaOk.textContent = "";
+        cajaOk.style.display = "none";
     }
 });
