@@ -188,3 +188,7 @@ app.use("/api", (req, res) => {
 });
 
 // Manejador
+// Iniciar servidor
+app.listen(PORT, () => {
+    console.log(`Servidor AXIS ejecutándose en http://localhost:${PORT}`);
+});
