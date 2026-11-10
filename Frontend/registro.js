@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var nombre    = document.getElementById("nombre");
     var apellido  = document.getElementById("apellido");
     var correo    = document.getElementById("correo");
+    var telefono  = document.getElementById("telefono");
     var usuario   = document.getElementById("usuario");
     var contrasena= document.getElementById("contrasena");
     var ojo       = document.getElementById("ojo");
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Campos obligatorios vacios
             if (!nombre.value || !apellido.value || !correo.value ||
-                !usuario.value || !contrasena.value) {
+                !telefono.value || !usuario.value || !contrasena.value) {
                 mostrarError("Por favor completa todos los campos.");
                 return;
             }
@@ -66,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //          nombre:    nombre.value,
             //          apellido:  apellido.value,
             //          correo:    correo.value,
+            //          telefono:  telefono.value,
             //          usuario:   usuario.value,
             //          contrasena: contrasena.value
             //      })

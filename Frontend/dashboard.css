@@ -101,12 +101,26 @@ body {
     background: var(--naranja);
 }
 
+
+/* ---------- ICONOS DEL MENU ---------- */
+
 .icono {
-    font-size: 22px;
-    line-height: 1;
-    width: 22px;              /* ancho fijo para que todo quede alineado */
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
+}
+
+/* IMAGENES PNG */
+.menu-iconos .icono img {
+    width: 24px;
+    height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    object-fit: contain;
+    display: block;
 }
 
 /* ---------- NOMBRE DE CADA OPCION (.etiqueta) ----------
